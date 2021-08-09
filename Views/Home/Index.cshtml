@@ -1,0 +1,51 @@
+﻿@model ContattoInputModel
+<div>
+    <h1 class="display-4">Compila il form</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label asp-for="Nome"></label>
+            <input type="text" asp-for="Nome" class="form-control">
+            <span asp-validation-for="Nome"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Cognome"></label>
+            <input type="text" asp-for="Cognome" class="form-control">
+            <span asp-validation-for="Cognome"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Email"></label>
+            <input type="text" asp-for="Email" class="form-control">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Eta"></label>
+            <input type="number" asp-for="Eta" min="1" max="130" class="form-control">
+            <span asp-validation-for="Eta"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Telefono"></label>
+            <input type="text" asp-for="Telefono" class="form-control">
+            <span asp-validation-for="Telefono"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Messaggio"></label>
+            <textarea asp-for="Messaggio" class="form-control"></textarea>
+            <span asp-validation-for="Messaggio"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="AttachFile"></label>
+            <input type="file" asp-for="AttachFile" class="form-control">
+            <span asp-validation-for="AttachFile"></span>
+        </div>
+        <div class="form-group mb-3">
+            <input type="checkbox" asp-for="IsPrivacyAccepted" class="form-check-input"><label asp-for="IsPrivacyAccepted"></label>
+            <span asp-validation-for="IsPrivacyAccepted"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Invia form</button>
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"></partial>
+}
