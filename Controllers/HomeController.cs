@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
-using AspNetCoreUploadTest.Models.InputModels;
+﻿using System;
 using System.IO;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Ganss.XSS;
-using System;
+using AspNetCoreUploadTest.Models.InputModels;
+using Ganss.Xss;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreUploadTest.Controllers;
 
@@ -17,7 +17,10 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Index(ContattoInputModel inputModel, [FromServices] IWebHostEnvironment env)
+    public async Task<IActionResult> Index(
+        ContattoInputModel inputModel,
+        [FromServices] IWebHostEnvironment env
+    )
     {
         if (ModelState.IsValid)
         {
@@ -25,12 +28,15 @@ public class HomeController : Controller
             // That's the limit configured in the appsettings.json file
             IFormFile image = inputModel.AttachFile;
 
-            var fileFolder = Path.Combine(Path.Combine(env.WebRootPath, "upload"), Path.Combine(DateTime.Now.ToString("yyyy"), DateTime.Now.ToString("MM")));
+            var fileFolder = Path.Combine(
+                Path.Combine(env.WebRootPath, "upload"),
+                Path.Combine(DateTime.Now.ToString("yyyy"), DateTime.Now.ToString("MM"))
+            );
 
             if (!Directory.Exists(fileFolder))
                 Directory.CreateDirectory(fileFolder);
 
-            var imageSanitize = new HtmlSanitizer(allowedTags: new string[0]).Sanitize(image.FileName);
+            var imageSanitize = new HtmlSanitizer().Sanitize(image.FileName);
             var filePath = Path.Combine(fileFolder, imageSanitize);
 
             using var fileStream = System.IO.File.OpenWrite(filePath);
